@@ -10,13 +10,6 @@ import XCTest
 @testable import algorithms
 
 final class mergeSortTests: XCTestCase {
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(algorithms().text, "Hello, World!")
-    }
-    
     func testRegularSort() throws {
         let array: [Int] = sampleArray
         
