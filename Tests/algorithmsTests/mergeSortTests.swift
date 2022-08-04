@@ -15,7 +15,7 @@ final class mergeSortTests: XCTestCase {
         
         var mutableArray1 = array
         let mineTimer = ParkBenchTimer()
-        mergeSort(array: &mutableArray1)
+        mutableArray1.mergeSort()
         let mineDuration = mineTimer.stop()
 
         let originalTimer = ParkBenchTimer()
