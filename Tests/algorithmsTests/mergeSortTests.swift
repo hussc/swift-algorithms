@@ -25,5 +25,15 @@ final class mergeSortTests: XCTestCase {
         print("Timers: \(mineDuration) ||| \(originalTime)")
         XCTAssertTrue(mutableArray1 == originalSorted)
     }
+    
+    func testBubbleSort() throws {
+        let array = [9, 4, 10, 3]
+        XCTAssertEqual(array.bubbleSorted(), array.sorted())        
+    }
+    
+    func testSelectionSort() throws {
+        let array = [9, 4, 10, 3]
+        XCTAssertEqual(array.selectionSorted(), array.sorted())
+    }
 }
 

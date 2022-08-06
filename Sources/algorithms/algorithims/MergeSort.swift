@@ -7,51 +7,58 @@
 
 import Foundation
 
-extension Array where Element: Comparable {
+extension MutableCollection where Element: Comparable {
     mutating func mergeSort() {
-        func _merge(array: inout Self, l: Int, m: Int, r: Int) {
+        func _merge(array: Self, l: Index, m: Index, r: Index) -> Self {
             // assumpting the array is equal sizes
-            let a = Array(array[l...m])
-            let b = Array(array[m+1...r])
+            var result: Self = array
             
-            var i = 0
-            var j = 0
+            let a = array[l...m]
+            let b = array[array.index(after: m)...r]
+            
+            var i = a.startIndex
+            var j = b.startIndex
             var k = l
             
-            while i < a.count && j < b.count {
+            while i < a.endIndex && j < b.endIndex {
                 if a[i] < b[j] {
-                    array[k] = a[i]
-                    i += 1
+                    result[k] = a[i]
+                    i = array.index(after: i)
                 } else {
-                    array[k] = b[j]
-                    j += 1
+                    result[k] = b[j]
+                    j = array.index(after: j)
                 }
                 
-                k += 1
+                k = array.index(after: k)
             }
             
-            while i < a.count {
-                array[k] = a[i]
-                i += 1
-                k += 1
+            while i < a.endIndex {
+                result[k] = a[i]
+                i = array.index(after: i)
+                k = array.index(after: k)
             }
             
-            while j < b.count {
-                array[k] = b[j]
-                j += 1
-                k += 1
+            while j < b.endIndex {
+                result[k] = b[j]
+                j = array.index(after: j)
+                k = array.index(after: k)
             }
+            
+            return result
         }
         
-        func _sort(array: inout Self, l: Int, r: Int) {
-            if l >= r { return }
-            let m = (l + r) / 2
+        func _sort(array: Self, l: Index, r: Index) -> Self {
+            if l >= r { return array }
+            let size = distance(from: l, to: r)
+            let m = index(l, offsetBy: size / 2)
+            var array = array
             
-            _sort(array: &array, l: l, r: m)
-            _sort(array: &array, l: m + 1, r: r)
-            _merge(array: &array, l: l, m: m, r: r)
+            array = _sort(array: array, l: l, r: m)
+            array = _sort(array: array, l: array.index(after: m), r: r)
+            return _merge(array: array, l: l, m: m, r: r)
         }
         
-        _sort(array: &self, l: 0, r: self.count-1)
+        let end = index(endIndex, offsetBy: -1)
+        self = _sort(array: self, l: self.startIndex, r: end)
     }
 }
