@@ -35,5 +35,12 @@ final class mergeSortTests: XCTestCase {
         let array = [9, 4, 10, 3]
         XCTAssertEqual(array.selectionSorted(), array.sorted())
     }
+    
+    func testQuickSort() throws {
+        let array = [9, 4, 10, 3]
+        let array2 = [9, 4, 10, 3]
+        
+        XCTAssertEqual(quicksortNaive(array2), array.sorted())
+    }
 }
 
